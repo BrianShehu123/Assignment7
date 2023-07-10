@@ -1,13 +1,12 @@
 // Cyclic Sort Algorithm
-function findDuplicatesCyclicSort(nums) {
+function findDuplicate(nums) {
     if (!nums) {
       return null;
     }
   
     let i = 0;
-    const duplicates = [];
   
-    // Cyclic Sort
+    // Perform cyclic sort
     while (i < nums.length) {
       const correctIndex = nums[i] - 1;
       if (nums[i] !== nums[correctIndex]) {
@@ -17,66 +16,24 @@ function findDuplicatesCyclicSort(nums) {
       }
     }
   
-    // Find Duplicates
+    // Find the duplicate number
     for (let j = 0; j < nums.length; j++) {
       if (nums[j] !== j + 1) {
-        duplicates.push(nums[j]);
+        return nums[j];
       }
     }
   
-    return duplicates;
-  }
-  
-  // Fast/Slow Pointer Algorithm
-  function findDuplicatesFastSlowPointer(nums) {
-    if (!nums) {
-      return null;
-    }
-  
-    const duplicates = [];
-  
-    let slow = nums[0];
-    let fast = nums[nums[0]];
-  
-    // Finding Cycle
-    while (slow !== fast) {
-      slow = nums[slow];
-      fast = nums[nums[fast]];
-    }
-  
-    // Finding Duplicate Number
-    fast = 0;
-    while (slow !== fast) {
-      slow = nums[slow];
-      fast = nums[fast];
-    }
-  
-    duplicates.push(slow); // Adding the duplicate to the array
-  
-    return duplicates;
+    return null;
   }
   
   // Testing
-  describe("findDuplicatesCyclicSort", () => {
-    test("returns an empty array when given [1]", () => {
-      expect(findDuplicatesCyclicSort([1])).toEqual([]);
+  describe("findDuplicate", () => {
+    test("should return the duplicate number in the array", () => {
+      expect(findDuplicate([1, 3, 4, 2, 2])).toEqual(2);
     });
   
-    test("returns [2, 3] when given [1, 2, 3, 3, 4, 5, 6, 6]", () => {
-      expect(findDuplicatesCyclicSort([1, 2, 3, 3, 4, 5, 6, 6])).toEqual([3, 6]);
+    test("should return null when there is no duplicate", () => {
+      expect(findDuplicate([1, 2, 3, 4, 5])).toBeNull();
     });
-  
-  });
-  
-  describe("findDuplicatesFastSlowPointer", () => {
-    test("returns an empty array when given [1]", () => {
-      expect(findDuplicatesFastSlowPointer([1])).toEqual([]);
-    });
-  
-    test("returns [3, 6] when given [1, 2, 3, 3, 4, 5, 6, 6]", () => {
-      expect(findDuplicatesFastSlowPointer([1, 2, 3, 3, 4, 5, 6, 6])).toEqual([3, 6]);
-    });
-  
-   
   });
   
